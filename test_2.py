@@ -16,7 +16,7 @@ config = {
     "training": {
         "device": "cpu", # "cuda" or "cpu"
         "batch_size": 1,
-        "num_epoch": 10,
+        "num_epoch": 1,
         "learning_rate": 0.001
     }
 }
@@ -87,8 +87,8 @@ class RNN(nn.Module):
         self.linear = nn.Linear(64, 2)
 
     def forward(self, x):
-        out, hidden = self.rnn(x)
-        result = self.linear(hidden)
+        x_out, x_hidden = self.rnn(x)
+        result = self.linear(x_hidden)
         return result
 
 model = RNN()
@@ -136,14 +136,17 @@ total_correct = 0
 total_data = 0
 
 for batch_idx, (data, target) in enumerate(test_loader):
+    
     inputs = data
     target = target
     out = model(inputs)
 
     result = torch.argmax(out[0])
-    print(result)
     num_correct = torch.eq(result, target).sum().item()
     num_data = len(target)
+
     total_correct += num_correct
     total_data += num_data
+
 print('accuracy :', total_correct/total_data)
+print(model)
