@@ -16,7 +16,7 @@ config = {
     "training": {
         "device": "cpu", # "cuda" or "cpu"
         "batch_size": 1,
-        "num_epoch": 1,
+        "num_epoch": 10,
         "learning_rate": 0.001
     }
 }
@@ -88,10 +88,12 @@ class RNN(nn.Module):
         super(RNN, self).__init__()
         self.rnn = nn.RNN(189, 64, batch_first=True)
         self.linear = nn.Linear(64, 2)
+        self.relu = nn.ReLU()
 
     def forward(self, x):
         x_out, x_hidden = self.rnn(x)
-        result = self.linear(x_hidden)
+        x_hidden_relu = self.relu(x_hidden)
+        result = self.linear(x_hidden_relu)
         return result
 
 model = RNN()
