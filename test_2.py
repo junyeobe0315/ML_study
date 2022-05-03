@@ -23,6 +23,7 @@ config = {
 
 data = pd.read_csv('./spam.csv',encoding='latin1')
 
+
 del data['Unnamed: 2']
 del data['Unnamed: 3']
 del data['Unnamed: 4']
@@ -34,6 +35,8 @@ X_data = data['v2']
 Y_data = data['v1']
 
 X_train, X_test, Y_train, Y_test = train_test_split(X_data, Y_data, test_size=0.2)
+
+print(X_train)
 
 tokenizer = Tokenizer()
 tokenizer.fit_on_texts(X_train)
