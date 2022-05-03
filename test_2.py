@@ -14,7 +14,7 @@ from tqdm import tqdm
 
 config = {
     "training": {
-        "device": "cpu", # "cuda" or "cpu"
+        "device": "cuda" if torch.cuda.is_available() else "cpu", # "cuda" or "cpu"
         "batch_size": 1,
         "num_epoch": 10,
         "learning_rate": 0.001
